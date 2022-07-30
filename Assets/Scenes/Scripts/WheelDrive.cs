@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public enum DriveType { RearWheelDrive, FrontWheelDrive, AllWheelDrive }
-public class WheelDrive : MonoBehaviour
+public class WheelDrive : NetworkBehaviour
 {
     [SerializeField] float maxAngle = 30f;
     [SerializeField] float maxTorque = 30f;
     [SerializeField] float brakeTorque = 30000f;
     [SerializeField] GameObject wheelShape;
+    [SerializeField] GameObject player;
     
     [SerializeField] float criticalSpeed = 5f;
     [SerializeField] int stepBelow = 5;
@@ -27,6 +30,10 @@ public class WheelDrive : MonoBehaviour
     InputAction accelerationInputAction;
 
     [SerializeField] Vector3 allRotationOffsets;
+
+    private Vector3 smoothInputVelocity;
+
+    [SerializeField] private float smoothInputSpeed = .2f;
 
     private void Awake() 
     {
@@ -79,20 +86,10 @@ public class WheelDrive : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_Wheels = GetComponentsInChildren<WheelCollider>();
-        for (int i = 0; i < m_Wheels.Length; i++)
-        {
-            var wheel = m_Wheels[i];
-            if(wheelShape != null)
-            {
-                var ws = Instantiate(wheelShape, wheel.transform.position, Quaternion.Euler(new Vector3(90, 90, 90)));
-                ws.transform.parent = wheel.transform;
-            }
-        }
+         player.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Movement()
     {
         m_Wheels[0].ConfigureVehicleSubsteps(criticalSpeed, stepBelow, stepAbove);
 
@@ -110,7 +107,7 @@ public class WheelDrive : MonoBehaviour
             {
                 wheel.motorTorque = torque;
             }
-            if(wheel.transform.localPosition.z > 0 && driveType != DriveType.FrontWheelDrive)
+            if (wheel.transform.localPosition.z > 0 && driveType != DriveType.FrontWheelDrive)
             {
                 wheel.motorTorque = torque;
             }
@@ -122,10 +119,10 @@ public class WheelDrive : MonoBehaviour
 
                 Transform shapeTransform = wheel.transform.GetChild(0);
 
-                if(wheel.name == "a0l" || wheel.name == "a1l" || wheel.name == "a0r" || wheel.name == "a1r")
+                if (wheel.name == "a0l" || wheel.name == "a1l" || wheel.name == "a0r" || wheel.name == "a1r")
                 {
                     shapeTransform.rotation = q;
-                    shapeTransform.position = p;
+                    shapeTransform.position = Vector3.SmoothDamp(shapeTransform.position, p, ref smoothInputVelocity, smoothInputSpeed, criticalSpeed);
                     shapeTransform.localRotation *= Quaternion.Euler(allRotationOffsets);
                 }
                 else
@@ -135,6 +132,36 @@ public class WheelDrive : MonoBehaviour
                 }
 
             }
+        }
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+        if(SceneManager.GetActiveScene().name == "Car Game")
+        {
+            if (player.activeSelf == false)
+            {
+                player.SetActive(true);
+                m_Wheels = GetComponentsInChildren<WheelCollider>();
+                for (int i = 0; i < m_Wheels.Length; i++)
+                {
+                    var wheel = m_Wheels[i];
+                    if (wheelShape != null)
+                    {
+                        var ws = Instantiate(wheelShape, wheel.transform.position, Quaternion.Euler(new Vector3(90, 90, 90)));
+                        ws.transform.parent = wheel.transform;
+                    }
+                }
+            }
+            if (hasAuthority)
+            {
+                Movement();
+            }
+        }
+        else
+        {
+            return;
         }
     }
 }
