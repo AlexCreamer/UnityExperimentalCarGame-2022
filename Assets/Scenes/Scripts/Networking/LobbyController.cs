@@ -21,11 +21,14 @@ public class LobbyController : MonoBehaviour
     //Other Data
     public ulong CurrentLobbyID;
     public bool PlayerItemCreated = false;
-    private List<PlayerListItem> PlayerListItems = new List<PlayerListItem>();
+    public static List<PlayerListItem> PlayerListItems = new List<PlayerListItem>();
     public MyNetworkPlayer LocalPlayerController;
 
     public Button StartGameButton;
     public Text ReadyButtonText;
+
+    //For other class
+    public static List<GameObject> NewPlayerItems = new List<GameObject>();
 
     //Manager
     private MyNetworkManager manager;
@@ -39,6 +42,11 @@ public class LobbyController : MonoBehaviour
             }
             return manager = MyNetworkManager.singleton as MyNetworkManager;
         }
+    }
+
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
     }
 
     void Awake()
@@ -134,6 +142,11 @@ public class LobbyController : MonoBehaviour
             NewPlayerItem.transform.localScale = Vector3.one;
 
             PlayerListItems.Add(NewPlayerItemScript);
+
+
+            //For other scripts
+            //NewPlayerItems.Add(Instantiate(NewPlayerItem));
+            //DontDestroyOnLoad(NewPlayerItem);
         }
         PlayerItemCreated = true;
     }
@@ -157,6 +170,10 @@ public class LobbyController : MonoBehaviour
                 NewPlayerItem.transform.localScale = Vector3.one;
 
                 PlayerListItems.Add(NewPlayerItemScript);
+                
+                //For other scripts
+                //NewPlayerItems.Add(Instantiate(NewPlayerItem));
+                //DontDestroyOnLoad(NewPlayerItem);
             }
         }
     }

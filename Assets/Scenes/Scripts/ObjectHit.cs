@@ -12,6 +12,10 @@ public class ObjectHit : MonoBehaviour
             MeshRenderer playerMesh = other.gameObject.GetComponentInChildren<MeshRenderer>();
             GetComponent<MeshRenderer>().material.color = playerMesh.material.color;
             gameObject.tag = "Hit";
+
+            //Scorekeeper +1 score for player ID
+            MyNetworkPlayer NP = GetComponentInChildren<MyNetworkPlayer>();
+            Scoreboard.addPoint(NP.PlayerSteamID, 1);
         }
     }
 
