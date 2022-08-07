@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class ScoreboardCanvas : MonoBehaviour
 {
@@ -19,8 +21,8 @@ public class ScoreboardCanvas : MonoBehaviour
             //playerScore.transform.SetParent(PlayerListViewContent.transform);
             //playerScore.transform.localScale = Vector3.one;
 
-            PlayerNameText.text = playerScore.PlayerListItem.PlayerNameText;
-            PlayerIcon.texture = PlayerName
+            PlayerNameText = playerScore.Key.PlayerNameText;
+            PlayerIcon = playerScore.Key.PlayerIcon;
         }
     }
 

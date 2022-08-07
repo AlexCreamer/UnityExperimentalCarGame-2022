@@ -18,6 +18,10 @@ public class LobbyController : MonoBehaviour
     public GameObject PlayerListItemPrefab;
     public GameObject LocalPlayerObject;
 
+    public GameObject PlayerscorePrefab;
+    public GameObject PlayerscoreViewContent;
+
+
     //Other Data
     public ulong CurrentLobbyID;
     public bool PlayerItemCreated = false;
@@ -144,6 +148,21 @@ public class LobbyController : MonoBehaviour
             PlayerListItems.Add(NewPlayerItemScript);
 
 
+            // *** Part 2 here insert the info in the scoreboard ***
+            GameObject PlayerscoreItem = Instantiate(PlayerscorePrefab) as GameObject;
+            Playerscore NewPlayerscoreScript = PlayerscoreItem.GetComponent<Playerscore>();
+
+            NewPlayerscoreScript.PlayerName = player.PlayerName;
+            NewPlayerscoreScript.ConnectionID = player.ConnectionID;
+            NewPlayerscoreScript.PlayerSteamID = player.PlayerSteamID;
+            NewPlayerscoreScript.score = Scoreboard.GetScore(NewPlayerItemScript);
+            NewPlayerscoreScript.SetPlayerValues();
+
+            PlayerscoreItem.transform.SetParent(PlayerscoreViewContent.transform);
+            PlayerscoreItem.transform.localScale = Vector3.one;
+
+
+
             //For other scripts
             //NewPlayerItems.Add(Instantiate(NewPlayerItem));
             //DontDestroyOnLoad(NewPlayerItem);
@@ -168,9 +187,24 @@ public class LobbyController : MonoBehaviour
 
                 NewPlayerItem.transform.SetParent(PlayerListViewContent.transform);
                 NewPlayerItem.transform.localScale = Vector3.one;
+               
 
                 PlayerListItems.Add(NewPlayerItemScript);
-                
+
+
+                // *** Part 2 here insert the info in the scoreboard ***
+                GameObject PlayerscoreItem = Instantiate(PlayerscorePrefab) as GameObject;
+                Playerscore NewPlayerscoreScript = PlayerscoreItem.GetComponent<Playerscore>();
+                NewPlayerscoreScript.playerItem = NewPlayerItemScript;
+
+                NewPlayerscoreScript.PlayerName = player.PlayerName;
+                NewPlayerscoreScript.ConnectionID = player.ConnectionID;
+                NewPlayerscoreScript.PlayerSteamID = player.PlayerSteamID;
+                NewPlayerscoreScript.score = Scoreboard.GetScore(NewPlayerItemScript);
+                NewPlayerscoreScript.SetPlayerValues();
+
+                PlayerscoreItem.transform.SetParent(PlayerscoreViewContent.transform);
+                PlayerscoreItem.transform.localScale = Vector3.one;
                 //For other scripts
                 //NewPlayerItems.Add(Instantiate(NewPlayerItem));
                 //DontDestroyOnLoad(NewPlayerItem);

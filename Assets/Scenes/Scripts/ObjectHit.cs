@@ -15,7 +15,16 @@ public class ObjectHit : MonoBehaviour
 
             //Scorekeeper +1 score for player ID
             MyNetworkPlayer NP = GetComponentInChildren<MyNetworkPlayer>();
-            Scoreboard.addPoint(NP.PlayerSteamID, 1);
+
+            foreach(PlayerListItem playerItem in LobbyController.PlayerListItems)
+            {
+                if(playerItem.PlayerSteamID == NP.PlayerSteamID)
+                {
+                    Scoreboard.addPoint(playerItem, 1);
+                    break;
+                }
+            }
+
         }
     }
 

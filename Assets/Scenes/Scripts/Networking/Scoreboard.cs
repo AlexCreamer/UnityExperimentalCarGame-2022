@@ -29,4 +29,16 @@ public class Scoreboard : MonoBehaviour
         Playerscore playerScore = new Playerscore { playerItem = NewPlayerItem, score = 0 };
         scorekeeper.Add(NewPlayerItem, playerScore);
     }
+
+    public static int GetScore(PlayerListItem playerItem)
+    {
+        foreach(KeyValuePair<PlayerListItem, Playerscore> player in scorekeeper)
+        {
+            if (player.Key == playerItem)
+            {
+                return player.Value.score;
+            }
+        }
+        return 0;
+    }
 }

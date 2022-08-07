@@ -9,7 +9,7 @@ public class PlayerListItem : MonoBehaviour
     public string PlayerName;
     public int ConnectionID;
     public ulong PlayerSteamID;
-    private bool AvatarReceived;
+    public bool AvatarReceived;
 
     public Text PlayerNameText;
     public RawImage PlayerIcon;
