@@ -24,10 +24,10 @@ public class Scoreboard : MonoBehaviour
         scorekeeper[playerItem].addPoint(points);
     }
 
-    public static void addPlayer(PlayerListItem NewPlayerItem)
+    public static void addPlayer(PlayerListItem NewPlayerItem, Playerscore playerscore)
     {
-        Playerscore playerScore = new Playerscore { playerItem = NewPlayerItem, score = 0 };
-        scorekeeper.Add(NewPlayerItem, playerScore);
+        //Playerscore playerScore = new Playerscore { playerItem = NewPlayerItem, score = 0 };
+        scorekeeper.Add(NewPlayerItem, playerscore);
     }
 
     public static int GetScore(PlayerListItem playerItem)

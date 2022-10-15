@@ -14,7 +14,7 @@ public class ObjectHit : MonoBehaviour
             gameObject.tag = "Hit";
 
             //Scorekeeper +1 score for player ID
-            MyNetworkPlayer NP = GetComponentInChildren<MyNetworkPlayer>();
+            MyNetworkPlayer NP = other.gameObject.GetComponentInParent<MyNetworkPlayer>();
 
             foreach(PlayerListItem playerItem in LobbyController.PlayerListItems)
             {

@@ -25,7 +25,7 @@ public class ScoreboardCanvas : MonoBehaviour
             PlayerIcon = playerScore.Key.PlayerIcon;
         }
     }
-
+ 
     // Update is called once per frame
     void Update()
     {

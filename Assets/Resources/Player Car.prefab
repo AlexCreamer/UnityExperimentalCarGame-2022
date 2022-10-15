@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 1567081740}
   - component: {fileID: 3949542731252570511}
   - component: {fileID: 5172295228077828270}
+  - component: {fileID: 1200376383}
   m_Layer: 0
   m_Name: Player Car
   m_TagString: Respawn
@@ -243,7 +244,7 @@ Transform:
   - {fileID: 3798828198815875838}
   - {fileID: 9124844556416285341}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3798828199178358860
 MonoBehaviour:
@@ -398,6 +399,18 @@ MonoBehaviour:
   syncAngularVelocity: 1
   clearAngularVelocity: 0
   angularVelocitySensitivity: 0.1
+--- !u!114 &1200376383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3798828199178358862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765fff2dd2c79a34198d363e3a38b5ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3798828200147016338
 GameObject:
   m_ObjectHideFlags: 0

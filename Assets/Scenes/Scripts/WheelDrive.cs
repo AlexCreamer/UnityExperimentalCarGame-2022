@@ -23,6 +23,7 @@ public class WheelDrive : NetworkBehaviour
     float handBrake, torque;
     public float angle;
 
+    // Input Actions
     public InputActionAsset inputActions;
     InputActionMap gameplayActionMap;
     InputAction handBrakeInputAction;

@@ -5,6 +5,7 @@ using Mirror;
 using Steamworks;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class LobbyController : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class LobbyController : MonoBehaviour
     public GameObject PlayerscorePrefab;
     public GameObject PlayerscoreViewContent;
 
+    public static GameObject scoreboard;
+
 
     //Other Data
     public ulong CurrentLobbyID;
@@ -33,6 +36,8 @@ public class LobbyController : MonoBehaviour
 
     //For other class
     public static List<GameObject> NewPlayerItems = new List<GameObject>();
+
+    public static List<Playerscore> PlayerscoreItems = new List<Playerscore>();
 
     //Manager
     private MyNetworkManager manager;
@@ -50,6 +55,11 @@ public class LobbyController : MonoBehaviour
 
     private void Start()
     {
+        scoreboard = GameObject.Find("Scoreboard");
+        if (scoreboard)
+        {
+            scoreboard.SetActive(false);
+        }
         DontDestroyOnLoad(gameObject);
     }
 
@@ -161,7 +171,9 @@ public class LobbyController : MonoBehaviour
             PlayerscoreItem.transform.SetParent(PlayerscoreViewContent.transform);
             PlayerscoreItem.transform.localScale = Vector3.one;
 
+            PlayerscoreItems.Add(NewPlayerscoreScript);
 
+            Scoreboard.addPlayer(NewPlayerItemScript, NewPlayerscoreScript);
 
             //For other scripts
             //NewPlayerItems.Add(Instantiate(NewPlayerItem));
@@ -205,6 +217,13 @@ public class LobbyController : MonoBehaviour
 
                 PlayerscoreItem.transform.SetParent(PlayerscoreViewContent.transform);
                 PlayerscoreItem.transform.localScale = Vector3.one;
+
+                PlayerscoreItems.Add(NewPlayerscoreScript);
+
+
+                Scoreboard.addPlayer(NewPlayerItemScript, NewPlayerscoreScript);
+
+
                 //For other scripts
                 //NewPlayerItems.Add(Instantiate(NewPlayerItem));
                 //DontDestroyOnLoad(NewPlayerItem);
@@ -260,4 +279,6 @@ public class LobbyController : MonoBehaviour
     {
         LocalPlayerController.CanStartGame(SceneName);
     }
+    
+
 }
